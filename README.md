@@ -2,6 +2,8 @@
 ## **NOWA BARBER-SHOP** 💈
 
 ### **Week 1**
+
+
 1. Project Title:
 - This project aims to develop a barber service booking platform that offers a smooth and user-friendly experience for customers, allowing them to view real-time availability, choose barbers, and manage appointments. At the same time, it provides barbershop owners with efficient tools to manage services, staff, and bookings with ease.
 2. Problem Statement:
@@ -69,3 +71,7 @@
     6. /dashboard → Admin dashboard (admin only)
 
 ---
+
+### **Week 2**
+
+1. Day 1-2: High-Level Design
