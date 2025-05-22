@@ -19,7 +19,8 @@
   - Access reports of best-selling services and daily activity.
 
 3. Brief Overview of the Application’s Functionality:
- 
+
+ NOWA BARBER-SHOP is a web application where customers can view and choose differetns services (cut, beard, eyebrows...), add them to the cart, select date, time and barber, finally confirm the appointment.
 
 4. Technology Stack
 
