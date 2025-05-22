@@ -1,7 +1,7 @@
 # **Capstone-Project**
 ## **NOWA BARBER-SHOP** 💈
 
-### ** Week 1 **
+### **Week 1**
 1. Project Title:
 - This project aims to develop a barber service booking platform that offers a smooth and user-friendly experience for customers, allowing them to view real-time availability, choose barbers, and manage appointments. At the same time, it provides barbershop owners with efficient tools to manage services, staff, and bookings with ease.
 2. Problem Statement:
