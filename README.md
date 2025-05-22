@@ -21,25 +21,50 @@
 3. Brief Overview of the Application’s Functionality:
  
 
-4. Technology Stack:
-Frontend:
- 
-API:
- 
-Styling:
- 
-Version Control:
- 
+4. Technology Stack
 
-5. Features to be Implemented:
-Search Functionality:
- 
-Current Weather:
- 
-5-Day Forecast:
- 
-Error Handling:
- 
-Mobile Responsiveness:
- 
-Routing:
+ - Frontend:
+  1.  **HTML, CSS, JavaScript**
+  2. **React.js** – For building a dynamic and responsive user interface
+  3. **Chakra UI** or **Material UI** – For production-ready UI components
+
+- Backend:
+    1. **Django (Python)** – A robust web framework with built-in routing, ORM, forms, and admin panel
+    2. **Authentication:**
+        - django.contrib.auth for session-based login, registration, and user roles
+        -Alternatively, djangorestframework-simplejwt for token-based (JWT) authentication
+
+- Database:
+    1. **MySQL**
+    2. **ORM:** Django's built-in ORM (recommended with Django)
+
+- Extras:
+    1. **Email Notifications:** Using `django.core.mail` for appointment confirmations (optional)
+    2. **Calendar Integration:** FullCalendar.js or Flatpickr for selecting appointment dates and times
+
+- Version Control:
+    1. **GitHub** for version control and collaboration
+
+4. Features
+
+- For Clients:
+    1. User registration and login
+    2. Browse available services
+    3. Schedule appointments (select service, date, time, and barber)
+    4. View appointment history
+
+- For Admins:
+    1.Full CRUD for services and barbers
+    2.Manage and edit appointments
+    3. Admin dashboard with activity reports
+
+- Routing
+
+    1. / → Home page
+    2. /login → User login
+    3. /register → User registration
+    4. /services → List of available services
+    5. /book → Appointment booking page
+    6. /dashboard → Admin dashboard (admin only)
+
+---
