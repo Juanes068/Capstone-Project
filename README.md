@@ -26,11 +26,11 @@
 
  - Frontend:
   1.  **HTML, CSS, JavaScript**
-  2. **React.js** – For building a dynamic and responsive user interface
-  3. **Chakra UI** or **Material UI** – For production-ready UI components
+  2. **React.js** For building a dynamic and responsive user interface
+  3. **Bootstrap** For responsive design and ready-to-use UI components
 
 - Backend:
-    1. **Django (Python)** – A robust web framework with built-in routing, ORM, forms, and admin panel
+    1. **Django (Python)**  A robust web framework with built-in routing, ORM, forms, and admin panel
     2. **Authentication:**
         - django.contrib.auth for session-based login, registration, and user roles
         -Alternatively, djangorestframework-simplejwt for token-based (JWT) authentication
