@@ -75,3 +75,6 @@
 ### **Week 2**
 
 1. Day 1-2: High-Level Design
+
+![image high-level architecture diagrams](assets/week2-day1.drawio.png)
+![user and administrator flows](assets/week2-day2.drawio.png)
