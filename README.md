@@ -83,3 +83,7 @@
   * User and administrator flows
 
 ![user and administrator flows](assets/week2-day2.drawio.png)
+
+  * Mockups
+    * User interface
+  https://www.figma.com/design/HxMVMIfhWWMR6wQIGFG3zc/USER-INTERFACE?node-id=0-1&m=dev&t=7MsyYqLGQb9l4ElF-1 
