@@ -74,7 +74,7 @@
 
 ### **Week 2**
 
-1. Day 1-2: High-Level Design
+1. High-Level Design
    
   * High-level architecture diagrams
 
@@ -82,8 +82,55 @@
 
   * User and administrator flows
 
-![user and administrator flows](assets/week2-day2.drawio.png)
+![user and administrator flows](assets/week2-day1-V2.drawio.png)
 
   * Mockups
-    * User interface
-  https://www.figma.com/design/HxMVMIfhWWMR6wQIGFG3zc/USER-INTERFACE?node-id=0-1&m=dev&t=7MsyYqLGQb9l4ElF-1 
+    * UI interface
+  >> https://www.figma.com/design/HxMVMIfhWWMR6wQIGFG3zc/USER-INTERFACE?node-id=0-1&m=dev&t=7MsyYqLGQb9l4ElF-1
+
+2. Database Schema Design  
+   - Tables:  
+     1. User  
+     2. Admin  
+     3. Service  
+     4. Worker  
+     5. Appointment  
+     6. Cart  
+     7. Payment  
+     8. Review (feedback)  
+   * Relationships
+     * A User can have many Appointments
+     * A Barber can handle many Appointments
+     * A Service can be included in many Appointments
+     * An Appointment has one Barber, one User, and one or more Services
+     * A User can leave many Reviews, each linked to a Service
+   * Tables
+![NOWA tables](assets/TABLES.png)
+- CRUD Operations:  
+     1. USER  
+        - CREATE – Sign up  
+        - READ – View profile  
+        - UPDATE – Edit profile  
+        - DELETE – Delete account and credentials  
+     2. SERVICE  
+        - CREATE – Add new service  
+        - READ – View services  
+        - UPDATE – Edit service details  
+        - DELETE – Remove service  
+     3. APPOINTMENT  
+        - CREATE – Client books an appointment  
+        - READ – Client/Admin views appointments  
+        - UPDATE – Change date, time, or status  
+        - DELETE – Client or Admin cancels/deletes appointment  
+     4. WORKER  
+        - CREATE – Add new worker  
+        - READ – View list of workers  
+        - UPDATE – Edit worker profile  
+        - DELETE – Remove worker  
+     5. PAYMENT  
+        - CREATE – When client confirms appointment (test mode with Stripe)  
+        - READ – View payment records  
+        - DELETE – Client deletes their payment credentials  
+     6. REVIEW  
+        - CREATE – Client leaves feedback  
+        - READ – View reviews by service  
