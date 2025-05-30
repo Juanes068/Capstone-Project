@@ -104,7 +104,7 @@
      * A Service can be included in many Appointments
      * An Appointment has one Barber, one User, and one or more Services
      * A User can leave many Reviews, each linked to a Service
-   * Tables
+   * Tables (ERD)
 ![NOWA tables](assets/TABLES.png)
 - CRUD Operations:  
      1. USER  
