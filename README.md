@@ -40,14 +40,17 @@
 
 - Database:
     1. **MySQL**
-    2. **ORM:** Django's built-in ORM (recommended with Django)
+    2. **ORM:** Django's built-in ORM
 
 - Extras:
     1. **Email Notifications:** Using `django.core.mail` for appointment confirmations (optional)
-    2. **Calendar Integration:** FullCalendar.js or Flatpickr for selecting appointment dates and times
+    2. **Calendar Integration:** FullCalendar.js for selecting appointment dates and times
 
 - Version Control:
     1. **GitHub** for version control and collaboration
+- API
+    1. STRIPE
+    2. google maps API
 
 4. Features
 
@@ -69,7 +72,8 @@
     3. /register → User registration
     4. /services → List of available services
     5. /book → Appointment booking page
-    6. /dashboard → Admin dashboard (admin only)
+    6. /payment → Payment page
+    7. /dashboard → Admin dashboard (admin only)
 
 ---
 
