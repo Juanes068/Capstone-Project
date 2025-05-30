@@ -12,6 +12,7 @@
   - Register and log in as a customer or administrator.
   - Search and add services (cut, beard, eyebrows...) to their cart.
   - Select date, time and available barber.
+  - Pay for the service
   - Confirm your appointment and view your history.
 
 - Administrators will be able to:
