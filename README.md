@@ -110,7 +110,7 @@
      * An Appointment has one Barber, one User, and one or more Services
      * A User can leave many Reviews, each linked to a Service
    * Tables (ERD)
-![NOWA tables](assets/TABLESV2.png)
+![NOWA tables](assets/TablesV2.png)
 - CRUD Operations:  
      1. USER  
         - CREATE – Sign up  
