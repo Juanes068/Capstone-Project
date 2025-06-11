@@ -83,7 +83,7 @@
    
   * High-level architecture diagrams
 
-![image high-level architecture diagrams](assets/assets/CopyofUntitledDiagram.jpg)
+![image high-level architecture diagrams](assets/CopyofUntitledDiagram.jpg)
 
   * User and administrator flows
 
