@@ -83,7 +83,7 @@
    
   * High-level architecture diagrams
 
-![image high-level architecture diagrams](assets/week2-day1.drawio.png)
+![image high-level architecture diagrams](assets/Copy of Untitled Diagram.jpg)
 
   * User and administrator flows
 
