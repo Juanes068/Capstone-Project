@@ -139,3 +139,85 @@
      6. REVIEW  
         - CREATE – Client leaves feedback  
         - READ – View reviews by service  
+  3. API Endpoints, Request/Response Formats, and Authorization
+
+The NOWA BARBER-SHOP API is a RESTful service built with Django REST Framework. It supports full CRUD operations for users, services, barbers, appointments, payments, and reviews.
+
+### Authorization
+
+- Uses **JWT (JSON Web Tokens)** for protected routes via `djangorestframework-simplejwt`.
+- Required header for authenticated endpoints:
+
+```http
+Authorization: Bearer <your_token_here>
+```
+### User Endpoints
+
+| Method | Endpoint           | Description               | Auth Required |
+|--------|--------------------|---------------------------|----------------|
+| POST   | `/api/register/`   | Create new user account   | No             |
+| POST   | `/api/login/`      | Login and receive token   | No             |
+| GET    | `/api/profile/`    | Get user profile info     | Yes            |
+| PATCH  | `/api/profile/`    | Update user profile       | Yes            |
+
+**Sample Request (POST /api/register/):**
+
+```json
+{
+  "username": "juan",
+  "email": "juan@email.com",
+  "password": "securepass123"
+}
+```
+
+**Sample Response:**
+
+```json
+{
+  "id": 1,
+  "username": "juan",
+  "email": "juan@email.com"
+}
+```
+### Service Endpoints
+
+| Method | Endpoint             | Description             | Auth Required |
+|--------|----------------------|-------------------------|----------------|
+| GET    | `/api/services/`     | List all services       | No             |
+| POST   | `/api/services/`     | Create service          | Yes (Admin)    |
+| PATCH  | `/api/services/{id}/`| Update service          | Yes (Admin)    |
+| DELETE | `/api/services/{id}/`| Delete service          | Yes (Admin)    |
+
+### Worker (Barber) Endpoints
+
+| Method | Endpoint             | Description             | Auth Required |
+|--------|----------------------|-------------------------|----------------|
+| GET    | `/api/barbers/`      | List all barbers        | No             |
+| POST   | `/api/barbers/`      | Add new barber          | Yes (Admin)    |
+| PATCH  | `/api/barbers/{id}/` | Update barber info      | Yes (Admin)    |
+| DELETE | `/api/barbers/{id}/` | Delete barber           | Yes (Admin)    |
+
+### Appointment Endpoints
+
+| Method | Endpoint                   | Description                    | Auth Required |
+|--------|----------------------------|--------------------------------|----------------|
+| GET    | `/api/appointments/`       | View user/admin appointments   | Yes            |
+| POST   | `/api/appointments/`       | Create new appointment         | Yes            |
+| PATCH  | `/api/appointments/{id}/`  | Modify appointment             | Yes            |
+| DELETE | `/api/appointments/{id}/`  | Cancel appointment             | Yes            |
+
+### Payment Endpoints (Stripe)
+
+| Method | Endpoint                      | Description                        | Auth Required |
+|--------|-------------------------------|------------------------------------|----------------|
+| POST   | `/api/checkout/`              | Create Stripe checkout session     | Yes            |
+| GET    | `/api/payment-status/{id}/`   | Retrieve payment status            | Yes            |
+
+*Payments are handled in test mode via Stripe Test API *
+
+### Review Endpoints
+
+| Method | Endpoint                 | Description                     | Auth Required |
+|--------|--------------------------|---------------------------------|----------------|
+| POST   | `/api/reviews/`          | Submit a service review         | Yes            |
+| GET    | `/api/reviews/{service}/`| View reviews for a service      | No             |
