@@ -239,16 +239,17 @@ json
 - A public endpoint `POST /api/register/` was created to allow new user registration.
 - The view used `User.objects.create_user()` to create users with a username, email, and password.
 - CSRF checks were disabled using `@csrf_exempt` since it's consumed via Postman or external clients.
-
+![API REGISTER](assets/APIendpointPOSTMANregisterpost.png)
 ### JWT authentication (`/api/login/`)
 - The developer installed `djangorestframework` and `djangorestframework-simplejwt`.
 - JWT support was added to `settings.py` under `REST_FRAMEWORK` settings.
 - The login endpoint `POST /api/login/` was added using `TokenObtainPairView`, returning `access` and `refresh` tokens.
-
+![API LOGIN](assets/loginPOSTMANAPIendpoint.png)
 ### Authenticated user profile (`/api/profile/`)
 - A protected route `GET /api/profile/` was added using `@permission_classes([IsAuthenticated])`.
 - It returns the authenticated user’s `username`, `email`, and `id`.
 - Requires sending the JWT `access` token in the `Authorization` header.
+![API GET PROFLE](assets/apiENDPOINTGETpostman.png)
 
 ### Appointments model and creation (`/api/appointments/`)
 - The models `Service`, `Barber`, and `Appointment` were defined in `models.py`.
@@ -256,4 +257,6 @@ json
 - These models were registered in the admin to be created easily through the dashboard.
 - A serializer was created for the `Appointment` model.
 - A secure endpoint `POST /api/appointments/` was implemented to allow users to book a service by sending `service`, `barber`, `date`, and `time`. The `user` field is automatically set using the JWT token.
+![API APPOIMENTS](assets/postAPPOIMENT.png)
+
 
