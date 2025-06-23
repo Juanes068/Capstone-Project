@@ -229,6 +229,7 @@ json
 ### Initial migrations and superuser setup
 - The developer ran `python manage.py migrate` to apply Django’s default migrations (for users, sessions, admin, etc.).
 - Then, I created a superuser using `createsuperuser` to get access to the Django Admin Panel.
+![SUPER USER INTERFACE](assets/SUPERUSERINTERFACER.png)
 
 ### Routes connection and test endpoint
 - A new `core/urls.py` file was created to define the app’s internal routes.
