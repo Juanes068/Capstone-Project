@@ -226,5 +226,34 @@ json
 
 ### Week 3, 4 & 5: Development – Backend & Frontend Implementation
 
-  1.Test API functionality
-    
+### Initial migrations and superuser setup
+- The developer ran `python manage.py migrate` to apply Django’s default migrations (for users, sessions, admin, etc.).
+- Then, he created a superuser using `createsuperuser` to get access to the Django Admin Panel.
+
+### Routes connection and test endpoint
+- A new `core/urls.py` file was created to define the app’s internal routes.
+- It was linked to the main router in `barber_backend/urls.py` using `path('api/', include('core.urls'))`.
+- A test route `/api/ping/` was implemented and returned a simple JSON: `{"message": "pong"}`.
+
+### User registration (`/api/register/`)
+- A public endpoint `POST /api/register/` was created to allow new user registration.
+- The view used `User.objects.create_user()` to create users with a username, email, and password.
+- CSRF checks were disabled using `@csrf_exempt` since it's consumed via Postman or external clients.
+
+### JWT authentication (`/api/login/`)
+- The developer installed `djangorestframework` and `djangorestframework-simplejwt`.
+- JWT support was added to `settings.py` under `REST_FRAMEWORK` settings.
+- The login endpoint `POST /api/login/` was added using `TokenObtainPairView`, returning `access` and `refresh` tokens.
+
+### 5. Authenticated user profile (`/api/profile/`)
+- A protected route `GET /api/profile/` was added using `@permission_classes([IsAuthenticated])`.
+- It returns the authenticated user’s `username`, `email`, and `id`.
+- Requires sending the JWT `access` token in the `Authorization` header.
+
+### 6. Appointments model and creation (`/api/appointments/`)
+- The models `Service`, `Barber`, and `Appointment` were defined in `models.py`.
+- Migrations were generated and applied to create the related tables.
+- These models were registered in the admin to be created easily through the dashboard.
+- A serializer was created for the `Appointment` model.
+- A secure endpoint `POST /api/appointments/` was implemented to allow users to book a service by sending `service`, `barber`, `date`, and `time`. The `user` field is automatically set using the JWT token.
+
