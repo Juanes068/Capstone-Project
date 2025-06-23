@@ -225,3 +225,6 @@ json
 
 
 ### Week 3, 4 & 5: Development – Backend & Frontend Implementation
+
+  1.Test API functionality
+    
