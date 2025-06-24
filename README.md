@@ -259,20 +259,20 @@ json
 - A serializer was created for the "Appointment" model.
 - A secure endpoint "POST /api/appointments/" was implemented to allow users to book a service by sending "service", "barber", "date", and "time". The "user" field is automatically set using the JWT token.
 ![API APPOIMENTS](assets/postAPPOIMENT.png)
-## GET /api/my-appointments/
+### GET /api/my-appointments/
 - View protected with "IsAuthenticated"
 - Returns appointments ("Appointment") only for the authenticated user
 - Serializer: "AppointmentSerializer"
 - Tested with JWT in Postman
 ![API GET APPOIMENT](assets/GETAPPOIMENTS.png)
-## POST /api/checkout/
+### POST /api/checkout/
 - Integrated Stripe Checkout in test mode
 - Creates a payment session for an existing "Appointment"
 - Returns a "checkout_url" to the frontend
 - Redirection corrected by adding "/api/success/" and "/api/cancel/" routes
 - Successfully tested via Postman and browser
 ![API POST PAYMENT](assets/POSTpayment.png)
-## GET /api/payments/
+### GET /api/payments/
 - Created the "Payment" model with fields: "user", "appointment", "amount", "payment_date"
 - Created "PaymentSerializer"
 - Protected view listing payments for the authenticated user
