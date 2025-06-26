@@ -128,14 +128,11 @@
         - UPDATE – Change date, time, or status  
         - DELETE – Client or Admin cancels/deletes appointment  
      4. WORKER  
-        - CREATE – Add new worker  
         - READ – View list of workers  
         - UPDATE – Edit worker profile  
-        - DELETE – Remove worker  
      5. PAYMENT  
         - CREATE – When client confirms appointment (test mode with Stripe)  
         - READ – View payment records  
-        - DELETE – Client deletes their payment credentials  
      6. REVIEW  
         - CREATE – Client leaves feedback  
         - READ – View reviews by service  
