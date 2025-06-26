@@ -198,7 +198,7 @@ json
 
 | Method | Endpoint                   | Description                    | Auth Required |
 |--------|----------------------------|--------------------------------|----------------|
-| GET    |  /api/appointments/        | View user/admin appointments   | Yes            |
+| GET    |  /api/my-appointments/        | View user/admin appointments   | Yes            |
 | POST   |  /api/appointments/        | Create new appointment         | Yes            |
 | PATCH  |  /api/appointments/{id}/   | Modify appointment             | Yes            |
 | DELETE |  /api/appointments/{id}/   | Cancel appointment             | Yes            |
