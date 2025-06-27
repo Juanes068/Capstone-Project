@@ -313,3 +313,43 @@ json
 - Deletes a barber by ID.
 - Access restricted to admin users only.
 - Returns 204 on success or 404 if barber not found.
+
+### POST /api/services/
+- Creates a new service.
+- Access restricted to admin users only.
+- Returns created service data on success.
+
+### PATCH /api/services/{id}/
+- Updates a service by ID.
+- Access restricted to admin users only.
+- Returns updated service data on success.
+
+### DELETE /api/services/{id}/
+- Deletes a service by ID.
+- Access restricted to admin users only.
+- Returns 204 on success or 404 if service not found.
+
+### GET /api/appointments/
+- Retrieves a list of all appointments in the system.
+- Access restricted to admin users only.
+- Returns a list of all appointments.
+
+### POST /api/reviews/
+- Allows authenticated users to leave a review for a service.
+- Includes rating and comment fields.
+- Returns created review data on success.
+
+### GET /api/reviews/{service}/
+- Retrieves all reviews for a specific service.
+- Public access.
+- Returns a list of reviews with rating and comment.
+
+### GET /api/dashboard/most-booked-services/
+- Shows top 5 services with the highest booking counts.
+- Access restricted to admin users only.
+- Returns service names with booking counts.
+
+### GET /api/dashboard/daily-activity/
+- Shows the number of appointments per day.
+- Access restricted to admin users only.
+- Returns a list of dates with appointment counts.
