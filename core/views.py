@@ -32,16 +32,37 @@ def register(request):
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from django.contrib.auth.models import User
 
-@api_view(['GET'])
+@api_view(['GET', 'PATCH'])
 @permission_classes([IsAuthenticated])
-def profile(request):
+def user_profile(request):
     user = request.user
-    return JsonResponse({
-        'username': user.username,
-        'email': user.email,
-        'id': user.id
-    })
+
+    if request.method == 'GET':
+        return Response({
+            "id": user.id,
+            "username": user.username,
+            "email": user.email
+        })
+
+    if request.method == 'PATCH':
+        username = request.data.get("username")
+        email = request.data.get("email")
+
+        if username:
+            user.username = username
+        if email:
+            user.email = email
+
+        user.save()
+        return Response({
+            "message": "Profile updated successfully",
+            "username": user.username,
+            "email": user.email
+        }, status=status.HTTP_200_OK)
 
 
 from rest_framework.decorators import api_view, permission_classes
@@ -81,8 +102,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 import stripe
+from django.conf import settings 
 from .models import Appointment
 from django.shortcuts import get_object_or_404
+
+stripe.api_key = settings.STRIPE_SECRET_KEY 
 
 class CheckoutView(APIView):
     permission_classes = [IsAuthenticated]
@@ -138,3 +162,65 @@ def success_page(request):
 def cancel_page(request):
     return HttpResponse("decline")
 
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Appointment
+from .serializers import AppointmentSerializer
+
+@api_view(['PATCH', 'DELETE'])
+@permission_classes([IsAuthenticated])
+def appointment_detail(request, id):
+    try:
+        appointment = Appointment.objects.get(id=id, user=request.user)
+    except Appointment.DoesNotExist:
+        return Response({'error': 'Appointment not found'}, status=404)
+
+    if request.method == 'PATCH':
+        serializer = AppointmentSerializer(appointment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
+
+    if request.method == 'DELETE':
+        appointment.delete()
+        return Response({'message': 'Appointment deleted'}, status=204)
+
+
+from .models import Barber  
+from .serializers import BarberSerializer
+from rest_framework.permissions import IsAdminUser
+
+@api_view(['PATCH'])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def update_barber(request, id):
+    try:
+        barber = Barber.objects.get(id=id)
+    except Barber.DoesNotExist:
+        return Response({'error': 'Barber not found'}, status=404)
+
+    serializer = BarberSerializer(barber, data=request.data, partial=True)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data)
+    return Response(serializer.errors, status=400)
+
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated, IsAdminUser]) #solo superuser es capaz de acceder a info
+def list_barbers(request):
+    barbers = Barber.objects.all()
+    serializer = BarberSerializer(barbers, many=True)
+    return Response(serializer.data)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def create_barber(request):
+    serializer = BarberSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response(serializer.data, status=201)
+    return Response(serializer.errors, status=400)

@@ -12,13 +12,17 @@ urlpatterns = [
     path('ping/', views.ping), 
     path('register/', views.register),
     path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('profile/', views.profile),
+    path('profile/', views.user_profile),
     path('appointments/', views.create_appointment),  # POST
     path('my-appointments/', UserAppointmentsView.as_view(), name='user-appointments'),  # GET
     path('checkout/', CheckoutView.as_view(), name='checkout'),
     path('payments/', PaymentListView.as_view(), name='payments'),
     path('success/', success_page),
     path('cancel/', cancel_page),
+    path('appointments/<int:id>/', views.appointment_detail),
+    path('barbers/<int:id>/', views.update_barber),
+    path('barbers/', views.list_barbers),
+    path('barbers/create/', views.create_barber),
 ]
 #Creacion de endpoint - ping - test
 
