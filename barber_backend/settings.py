@@ -134,8 +134,10 @@ REST_FRAMEWORK = {
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),Add commentMore actions
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
 }
 
 import os
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
+from dotenv import load_dotenv
+load_dotenv()

@@ -224,3 +224,130 @@ def create_barber(request):
         serializer.save()
         return Response(serializer.data, status=201)
     return Response(serializer.errors, status=400)
+
+import stripe
+import os
+
+stripe.api_key = os.getenv("STRIPE_SECRET_KEY")
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Barber
+
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated, IsAdminUser])
+def delete_barber(request, id):
+    try:
+        barber = Barber.objects.get(id=id)
+    except Barber.DoesNotExist:
+        return Response({'error': 'Barber not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    barber.delete()
+    return Response({'message': 'Barber deleted successfully'}, status=status.HTTP_204_NO_CONTENT)
+
+
+from rest_framework.permissions import IsAdminUser
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import Service
+from .serializers import ServiceSerializer
+
+class CreateServiceView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def post(self, request):
+        serializer = ServiceSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+from rest_framework.generics import UpdateAPIView
+from rest_framework.permissions import IsAdminUser
+from .models import Service
+from .serializers import ServiceSerializer
+
+class UpdateServiceView(UpdateAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [IsAdminUser]
+    lookup_field = 'id'  
+
+
+from rest_framework.generics import DestroyAPIView
+from rest_framework.permissions import IsAdminUser
+from .models import Service
+from .serializers import ServiceSerializer
+
+class DeleteServiceView(DestroyAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [IsAdminUser]
+    lookup_field = 'id'
+
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAdminUser
+from .models import Appointment
+from .serializers import AppointmentSerializer
+
+class ListAllAppointmentsView(ListAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
+    permission_classes = [IsAdminUser]
+
+from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.permissions import IsAuthenticated, AllowAny
+from .models import Review
+from .serializers import ReviewSerializer
+
+# POST 
+class CreateReviewView(CreateAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+# GET 
+class ListReviewsByServiceView(ListAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        service_id = self.kwargs['service_id']
+        return Review.objects.filter(service__id=service_id).order_by('-created_at')
+
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from django.db.models import Count
+from .models import Service, Appointment
+
+class MostBookedServicesView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        services = Service.objects.annotate(bookings=Count('appointment')).order_by('-bookings')[:5]
+        data = [
+            {"service": service.name, "bookings": service.bookings}
+            for service in services
+        ]
+        return Response(data)
+
+from django.db.models.functions import TruncDate
+
+class DailyActivityView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        daily_appointments = (
+            Appointment.objects
+            .values('date')  
+            .annotate(count=Count('id'))
+            .order_by('date')
+        )
+        return Response(daily_appointments)

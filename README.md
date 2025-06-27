@@ -285,12 +285,12 @@ json
 ### PATCH /api/appointments/{id}/
 - Allows authenticated users to modify their own appointments.
 - Fields like date, time, service, and barber can be updated.
-- Secured with user-level filtering (`user=request.user`).
+- Secured with user-level filtering ("user=request.user").
 - Returns 404 if appointment does not belong to the user.
 
 ### DELETE /api/appointments/{id}/
 - Enables users to cancel their own appointments.
-- Protected with `IsAuthenticated` and filters by user ownership.
+- Protected with "IsAuthenticated" and filters by user ownership.
 - Returns 204 No Content on successful deletion.
 
 ### GET /api/barbers/
