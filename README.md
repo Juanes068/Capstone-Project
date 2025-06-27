@@ -187,7 +187,7 @@ json
 
 ### Worker (Barber) Endpoints
 
-| Method | Endpoint             | Description             | Auth Required |
+| Method | Endpoint             | Description             | Auth Required  |
 |--------|----------------------|-------------------------|----------------|
 | GET    |  /api/barbers/       | List all barbers        | No             |
 | POST   |  /api/barbers/       | Add new barber          | Yes (Admin)    |
@@ -198,14 +198,14 @@ json
 
 | Method | Endpoint                   | Description                    | Auth Required |
 |--------|----------------------------|--------------------------------|----------------|
-| GET    |  /api/my-appointments/        | View user/admin appointments   | Yes            |
+| GET    |  /api/my-appointments/     | View user/admin appointments   | Yes            |
 | POST   |  /api/appointments/        | Create new appointment         | Yes            |
 | PATCH  |  /api/appointments/{id}/   | Modify appointment             | Yes            |
 | DELETE |  /api/appointments/{id}/   | Cancel appointment             | Yes            |
 
 ### Payment Endpoints (Stripe)
 
-| Method | Endpoint                      | Description                        | Auth Required |
+| Method | Endpoint                      | Description                        | Auth Required  |
 |--------|-------------------------------|------------------------------------|----------------|
 | POST   | /api/checkout/                | Create Stripe checkout session     | Yes            |
 | GET    | /api/payment-status/{id}/     | Retrieve payment status            | Yes            |
@@ -276,3 +276,40 @@ json
 - Initially tested by manually creating a "Payment" via the admin
 ![API GET PAYMENT](assets/GETpayment.png)
 
+### PATCH /api/profile/
+- Protected route to update user's own profile (username and email).
+- Uses PATCH method with JWT authentication required.
+- Implemented using request.user to ensure ownership.
+- Tested in Postman with valid token and partial data.
+
+### PATCH /api/appointments/{id}/
+- Allows authenticated users to modify their own appointments.
+- Fields like date, time, service, and barber can be updated.
+- Secured with user-level filtering (`user=request.user`).
+- Returns 404 if appointment does not belong to the user.
+
+### DELETE /api/appointments/{id}/
+- Enables users to cancel their own appointments.
+- Protected with `IsAuthenticated` and filters by user ownership.
+- Returns 204 No Content on successful deletion.
+
+### GET /api/barbers/
+- Lists all barbers in the system.
+- Access restricted to admin users only (IsAdminUser).
+- Returns barber info including id, name, specialty, and availability.
+
+### POST /api/barbers/create/
+- Allows superusers to create a new barber.
+- Required fields: name, optional: specialty, availability.
+- Protected with IsAdminUser.
+- Uses BarberSerializer for validation and saving.
+
+### PATCH /api/barbers/{id}/
+- Allows admin to update barber info.
+- Accepts partial updates (e.g., name, specialty).
+- Protected by admin-only access.
+
+### DELETE /api/barbers/{id}/
+- Deletes a barber by ID.
+- Access restricted to admin users only.
+- Returns 204 on success or 404 if barber not found.
