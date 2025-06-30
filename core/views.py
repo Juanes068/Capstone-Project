@@ -116,8 +116,9 @@ class CheckoutView(APIView):
         appointment = get_object_or_404(Appointment, id=appointment_id, user=request.user)
 
         try:
-            # Simular monto con base en la cita (puedes ajustar)
-            amount = 2500  # en centavos = $25.00
+            
+            services = appointment.services.all()
+            amount = sum([int(service.price * 100)for service in services])  # valor del servicio en centavos, x 100 pra dar el decimal 
 
             session = stripe.checkout.Session.create(
                 payment_method_types=["card"],
@@ -351,3 +352,68 @@ class DailyActivityView(APIView):
             .order_by('date')
         )
         return Response(daily_appointments)
+
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
+import stripe
+import json
+from .models import Payment, Appointment
+from decouple import config
+
+stripe.api_key = config('STRIPE_SECRET_KEY')
+
+@csrf_exempt
+def stripe_webhook(request):
+    if request.method != 'POST':
+        return HttpResponse(status=400)
+
+    payload = request.body
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')  # usa .get() para evitar KeyError
+    endpoint_secret = config('STRIPE_ENDPOINT_SECRET')
+
+    if sig_header is None:
+        return HttpResponse(status=400)
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload, sig_header, endpoint_secret
+        )
+    except ValueError:
+        return HttpResponse(status=400)
+    except stripe.error.SignatureVerificationError:
+        return HttpResponse(status=400)
+
+    if event['type'] == 'checkout.session.completed':
+        session = event['data']['object']
+        appointment_id = session['metadata']['appointment_id']
+        customer_email = session['customer_email']
+        amount = session['amount_total'] / 100
+
+        try:
+            appointment = Appointment.objects.get(id=appointment_id)
+            Payment.objects.create(
+                user=appointment.user,
+                appointment=appointment,
+                amount=amount
+            )
+        except Appointment.DoesNotExist:
+            pass
+
+    return HttpResponse(status=200)
+
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import BasePermission
+from .models import Service
+from .serializers import ServiceSerializer
+
+class IsSuperUser(BasePermission):
+    """
+    Permite acceso solo a superusuarios.
+    """
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_superuser)
+
+class ListServicesSuperUserView(ListAPIView):
+    queryset = Service.objects.all()
+    serializer_class = ServiceSerializer
+    permission_classes = [IsSuperUser]

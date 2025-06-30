@@ -25,8 +25,8 @@ class Barber(models.Model):
 
 class Appointment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    service = models.ForeignKey(Service, on_delete=models.CASCADE)
     barber = models.ForeignKey(Barber, on_delete=models.CASCADE)
+    services = models.ManyToManyField(Service)
     date = models.DateField()
     time = models.TimeField()
 

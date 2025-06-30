@@ -5,10 +5,11 @@ from .models import Barber
 from .models import Service
 
 class AppointmentSerializer(serializers.ModelSerializer):
+    services = serializers.PrimaryKeyRelatedField(many=True, queryset=Service.objects.all())
     class Meta:
         model = Appointment
         fields = '__all__'
-        read_only_fields = ['user']
+
 
 
 class PaymentSerializer(serializers.ModelSerializer):

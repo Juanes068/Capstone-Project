@@ -14,6 +14,9 @@ from .views import CreateReviewView
 from .views import ListReviewsByServiceView
 from .views import MostBookedServicesView
 from .views import DailyActivityView
+from .views import stripe_webhook
+from .views import ListServicesSuperUserView
+
 
 
 urlpatterns = [
@@ -39,6 +42,8 @@ urlpatterns = [
     path('reviews/<int:service_id>/', ListReviewsByServiceView.as_view(), name='list_reviews_by_service'),
     path('dashboard/most-booked-services/', MostBookedServicesView.as_view(), name='most_booked_services'),
     path('dashboard/daily-activity/', DailyActivityView.as_view(), name='daily_activity'),
+    path('stripe/webhook/', stripe_webhook, name='stripe_webhook'),
+    path('services/admin/', ListServicesSuperUserView.as_view(), name='list_services_superuser'),
 ]
 #Creacion de endpoint - ping - test
 
