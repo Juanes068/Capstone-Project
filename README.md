@@ -221,7 +221,7 @@ json
 
 
 
-### Week 3, 4 & 5: Development – Backend & Frontend Implementation
+### Week 3, 4 & 5: Development – Backend 
 
 ### Initial migrations and superuser setup
 - The developer ran "python manage.py migrate" to apply Django’s default migrations (for users, sessions, admin, etc.).
@@ -353,3 +353,62 @@ json
 - Shows the number of appointments per day.
 - Access restricted to admin users only.
 - Returns a list of dates with appointment counts.
+
+### Stripe integration in POST /api/checkout/
+- Integrated Stripe payments directly into the "/api/checkout/" endpoint.
+- Calculates the total payment by summing all services linked to the appointment.
+- Sends the correct amount to Stripe Checkout.
+- Uses metadata to pass the "appointment_id" for identification.
+- Configured the system to automatically register payments made through Stripe into the "Payment" model upon successful checkout using the webhook.
+- Ensures Stripe payments reflect in the NOWA BARBER-SHOP system automatically.
+
+### GET /api/services/admin/
+- Lists all services in the system.
+- Access restricted to superusers only.
+- Returns full details of all services for management and audit purposes.
+
+### Week 3, 4 & 5: Development – Front- end 
+
+
+### login
+- Created the **Login page** using Vite + React + Bootstrap.
+- Implemented form fields for "username" and "password".
+- Connected to backend "/api/login/" to obtain JWT tokens.
+- Stores the "access" token in "localStorage" after successful login.
+- Redirects authenticated users to "/Home".
+
+
+### register
+- Created the **Register page** with form fields for "username", "email" and "password".
+- Connected to backend "/api/register/" to create a new user.
+- Displays success or error alerts after registration.
+- Redirects new users to "/login" after successful registration.
+- Added **navigation button** on login to access register form.
+
+### Home
+- Designed minimalistic **Home page** with a clear headline for NOWA BARBER-SHOP.
+- Includes “Book Now” call-to-action button redirecting to "/login".
+- Uses clean black-and-white branding consistent with the whole app.
+
+### profile
+- Created **Profile page** to display user data ("id", "username", "email").
+- Fetches authenticated user data from backend "/api/profile/" using JWT.
+- Displays user info in a styled React-Bootstrap Card.
+- Added **Edit Profile** button to navigate to "/edit-profile".
+
+
+### edit-profile
+- Implemented **Edit Profile page** connected to backend "/api/profile/" (PATCH).
+- Pre-fills "username" and "email" fields with current profile data.
+- Sends PATCH request to update user information.
+- Displays success and error messages on update.
+
+### Logout
+- Implemented **Logout button** in Navbar.
+- Clears JWT token from "localStorage" on click.
+- Redirects to "/login" after logout to close the session.
+
+### Footer
+- Added a minimalistic **Footer component**.
+- Uses black background with neutral text.
+- Ensures clear spacing from content t
