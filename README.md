@@ -1,5 +1,5 @@
 # **Capstone-Project**
-## **NOWA BARBER-SHOP** 💈
+## **NOWA BARBER-SHOP** 
 
 ### **Week 1**
 
