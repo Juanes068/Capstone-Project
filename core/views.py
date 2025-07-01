@@ -133,7 +133,7 @@ class CheckoutView(APIView):
                     "quantity": 1,
                 }],
                 mode="payment",
-                success_url="http://localhost:8000/api/success/",
+                success_url="http://localhost:5173/payment-success/",
                 cancel_url="http://localhost:8000/api/cancel/",
                 metadata={"appointment_id": appointment.id}
             )
@@ -208,10 +208,10 @@ def update_barber(request, id):
         return Response(serializer.data)
     return Response(serializer.errors, status=400)
 
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
-@permission_classes([IsAuthenticated, IsAdminUser]) #solo superuser es capaz de acceder a info
+@permission_classes([IsAuthenticated])  # Cualquier usuario autenticado puede acceder
 def list_barbers(request):
     barbers = Barber.objects.all()
     serializer = BarberSerializer(barbers, many=True)
@@ -400,20 +400,14 @@ def stripe_webhook(request):
             pass
 
     return HttpResponse(status=200)
-
+    
 from rest_framework.generics import ListAPIView
-from rest_framework.permissions import BasePermission
+from rest_framework.permissions import AllowAny
 from .models import Service
 from .serializers import ServiceSerializer
 
-class IsSuperUser(BasePermission):
-    """
-    Permite acceso solo a superusuarios.
-    """
-    def has_permission(self, request, view):
-        return bool(request.user and request.user.is_superuser)
-
-class ListServicesSuperUserView(ListAPIView):
+class ListServicesView(ListAPIView):
     queryset = Service.objects.all()
     serializer_class = ServiceSerializer
-    permission_classes = [IsSuperUser]
+    permission_classes = [AllowAny]  
+

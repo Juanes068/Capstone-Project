@@ -180,7 +180,7 @@ json
 
 | Method | Endpoint                | Description             | Auth Required  |
 |--------|-------------------------|-------------------------|----------------|
-| GET    |  /api/services/admin/   | List all services       | Yes (Admin     |
+| GET    |  /api/services/admin/   | List all services       | Yes            |
 | POST   |  /api/services/         | Create service          | Yes (Admin)    |
 | PATCH  |  /api/services/{id}/    | Update service          | Yes (Admin)    |
 | DELETE |  /api/services/{id}/    | Delete service          | Yes (Admin)    |
