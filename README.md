@@ -178,21 +178,21 @@ json
 
 ### Service Endpoints
 
-| Method | Endpoint             | Description             | Auth Required |
-|--------|----------------------|-------------------------|----------------|
-| GET    |  /api/services/      | List all services       | No             |
-| POST   |  /api/services/      | Create service          | Yes (Admin)    |
-| PATCH  |  /api/services/{id}/ | Update service          | Yes (Admin)    |
-| DELETE |  /api/services/{id}/ | Delete service          | Yes (Admin)    |
+| Method | Endpoint                | Description             | Auth Required  |
+|--------|-------------------------|-------------------------|----------------|
+| GET    |  /api/services/admin/   | List all services       | Yes (Admin     |
+| POST   |  /api/services/         | Create service          | Yes (Admin)    |
+| PATCH  |  /api/services/{id}/    | Update service          | Yes (Admin)    |
+| DELETE |  /api/services/{id}/    | Delete service          | Yes (Admin)    |
 
 ### Worker (Barber) Endpoints
 
-| Method | Endpoint             | Description             | Auth Required  |
-|--------|----------------------|-------------------------|----------------|
-| GET    |  /api/barbers/       | List all barbers        | No             |
-| POST   |  /api/barbers/       | Add new barber          | Yes (Admin)    |
-| PATCH  |  /api/barbers/{id}/  | Update barber info      | Yes (Admin)    |
-| DELETE |  /api/barbers/{id}/  | Delete barber           | Yes (Admin)    |
+| Method | Endpoint                | Description             | Auth Required  |
+|--------|-------------------------|-------------------------|----------------|
+| GET    |  /api/barbers/          | List all barbers        | Yes (Admin)    |
+| POST   |  /api/barbers/create/   | Add new barber          | Yes (Admin)    |
+| PATCH  |  /api/barbers/{id}/     | Update barber info      | Yes (Admin)    |
+| DELETE |  /api/barbers/{id}/     | Delete barber           | Yes (Admin)    |
 
 ### Appointment Endpoints
 
@@ -208,7 +208,7 @@ json
 | Method | Endpoint                      | Description                        | Auth Required  |
 |--------|-------------------------------|------------------------------------|----------------|
 | POST   | /api/checkout/                | Create Stripe checkout session     | Yes            |
-| GET    | /api/payment-status/{id}/     | Retrieve payment status            | Yes            |
+| GET    | /api/payment/                 | Retrieve payment status            | Yes            |
 
 *Payments are handled in test mode via Stripe Test API *
 
