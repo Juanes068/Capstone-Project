@@ -367,8 +367,32 @@ json
 - Access restricted to superusers only.
 - Returns full details of all services for management and audit purposes.
 
-### Week 3, 4 & 5: Development – Front- end 
+### GET /api/reviews/{service_id}/
+- Lists all reviews for a specific service.
+- Public access; no authentication required.
+- Returns user rating and comments for the service.
 
+### POST /api/reviews/
+- Allows authenticated users to submit reviews for services.
+- Users can submit rating and comments linked to a service.
+- Adds user feedback to the system for visibility on service pages.
+
+### GET /api/my-appointments/
+- Lists all appointments for the authenticated user.
+- Used to display user appointment history in the frontend.
+
+### GET /api/payments/
+- Lists all payments made by the authenticated user.
+- Allows users to view their payment history.
+- Integrated with Stripe webhook to automatically register payments.
+
+### Stripe integration for checkout
+- Configured Stripe Checkout to:
+  - Redirect to the frontend confirmation page after payment.
+  - Automatically register payments in the "Payment" model upon webhook confirmation.
+  - Update appointment payment status seamlessly in NOWA BARBER-SHOP.
+
+### Week 3, 4 & 5: Development – Front- end 
 
 ### login
 - Created the **Login page** using Vite + React + Bootstrap.
@@ -411,4 +435,47 @@ json
 ### Footer
 - Added a minimalistic **Footer component**.
 - Uses black background with neutral text.
-- Ensures clear spacing from content t
+- Ensures clear spacing from content 
+
+### Home Page ("Home.jsx")
+- Title and general description about NOWA Barbershop.
+- Carousel displaying services (haircut, shave, eyebrow styling).
+- Embedded Google Maps showing the shop location.
+- Displays client reviews pulled dynamically using "GET /api/reviews/1/".
+- Footer implemented with a clean, minimal style.
+
+### Services Page ("ServicesPage.jsx")
+- Displays all available services with images, names, descriptions, and prices.
+- Allows users to view details of each service.
+
+### Service Detail Page ("ServiceDetail.jsx")
+- Displays service details with image on the left and information on the right.
+- Shows reviews for the service.
+- Allows users to submit reviews with:
+  - Vertical radio button selection for rating using stars.
+  - Comment input.
+- Updates reviews dynamically upon submission.
+
+### Booking Page ("BookAppointment.jsx")
+- Allows users to book appointments by:
+  - Selecting services.
+  - Selecting barbers (with images).
+  - Choosing date and time.
+- Integrated Stripe payment button:
+  - On booking confirmation, redirects to Stripe Checkout.
+  - Upon successful payment, redirects back to frontend payment confirmation.
+
+### Profile Page ("Profile.jsx")
+- Displays user profile information (ID, username, email).
+- Buttons for:
+  - Editing profile.
+  - Viewing appointments history ("/appointments").
+  - Viewing payment history ("/payments").
+
+### Appointments Page ("AppointmentsPage.jsx")
+- Displays authenticated user's appointment history:
+  - Appointment ID, date, time, status, and booked services.
+
+### Payments Page ("PaymentsPage.jsx")
+- Displays authenticated user's payment history:
+  - Payment ID, amount, date, and linked appointment ID.
