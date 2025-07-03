@@ -363,50 +363,48 @@ class DailyActivityView(APIView):
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 import stripe
-import json
-from .models import Payment, Appointment
-from decouple import config
-
-stripe.api_key = config('STRIPE_SECRET_KEY')
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 
 @csrf_exempt
 def stripe_webhook(request):
-    if request.method != 'POST':
-        return HttpResponse(status=400)
-
     payload = request.body
-    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')  # usa .get() para evitar KeyError
-    endpoint_secret = config('STRIPE_ENDPOINT_SECRET')
-
-    if sig_header is None:
-        return HttpResponse(status=400)
+    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
 
     try:
         event = stripe.Webhook.construct_event(
             payload, sig_header, endpoint_secret
         )
-    except ValueError:
+    except ValueError as e:
+        # Invalid payload
         return HttpResponse(status=400)
-    except stripe.error.SignatureVerificationError:
+    except stripe.error.SignatureVerificationError as e:
+        # Invalid signature
         return HttpResponse(status=400)
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        appointment_id = session['metadata']['appointment_id']
-        customer_email = session['customer_email']
-        amount = session['amount_total'] / 100
+        # Aquí puedes extraer metadata y crear el Payment
+        appointment_id = session.get('metadata', {}).get('appointment_id')
+        amount_total = session.get('amount_total') / 100
+
+        from .models import Appointment, Payment
+        from django.contrib.auth.models import User
 
         try:
             appointment = Appointment.objects.get(id=appointment_id)
             Payment.objects.create(
                 user=appointment.user,
                 appointment=appointment,
-                amount=amount
+                amount=amount_total,
             )
         except Appointment.DoesNotExist:
             pass
 
     return HttpResponse(status=200)
+
     
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import AllowAny
