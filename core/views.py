@@ -365,13 +365,17 @@ from django.http import HttpResponse
 import stripe
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
+import json
 
 @csrf_exempt
 def stripe_webhook(request):
     payload = request.body
-    sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+    sig_header = request.META.get('HTTP_STRIPE_SIGNATURE')
     endpoint_secret = settings.STRIPE_WEBHOOK_SECRET
+
+    # DEBUG: Log raw payload
+    print("Stripe webhook payload:", payload.decode('utf-8'))
 
     try:
         event = stripe.Webhook.construct_event(
@@ -379,29 +383,37 @@ def stripe_webhook(request):
         )
     except ValueError as e:
         # Invalid payload
+        print("Invalid payload:", e)
         return HttpResponse(status=400)
     except stripe.error.SignatureVerificationError as e:
         # Invalid signature
+        print("Invalid signature:", e)
         return HttpResponse(status=400)
+
+    # DEBUG: Log event type
+    print("Stripe webhook event type:", event['type'])
 
     if event['type'] == 'checkout.session.completed':
         session = event['data']['object']
-        # Aquí puedes extraer metadata y crear el Payment
         appointment_id = session.get('metadata', {}).get('appointment_id')
         amount_total = session.get('amount_total') / 100
 
         from .models import Appointment, Payment
-        from django.contrib.auth.models import User
 
         try:
             appointment = Appointment.objects.get(id=appointment_id)
             Payment.objects.create(
                 user=appointment.user,
                 appointment=appointment,
-                amount=amount_total,
+                amount=amount_total
             )
+            print(f"Payment recorded for appointment {appointment_id}")
         except Appointment.DoesNotExist:
-            pass
+            print(f"Appointment with id {appointment_id} does not exist.")
+            return HttpResponse(status=400)
+        except Exception as e:
+            print("Error creating Payment:", e)
+            return HttpResponse(status=500)
 
     return HttpResponse(status=200)
 
