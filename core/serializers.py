@@ -28,13 +28,20 @@ class PaymentSerializer(serializers.ModelSerializer):
 class BarberSerializer(serializers.ModelSerializer):
     class Meta:
         model = Barber
-        fields = ['id', 'name', 'specialty', 'available']
-
+        fields = ('id', 'name', 'specialty')
 
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = ('id', 'name', 'price')
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    barber = BarberSerializer(read_only=True)
+    services = ServiceSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Appointment
+        fields = '__all__
 
 from .models import Review
 
