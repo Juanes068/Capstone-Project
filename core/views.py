@@ -140,8 +140,8 @@ class CheckoutView(APIView):
                     "quantity": 1,
                 }],
                 mode="payment",
-                success_url="https://nowa-frontend.onrender.com/payment-success/",
-                cancel_url="https://nowa-frontend.onrender.com/payment-cancel/",
+                success_url="https://nowa-barbershop.web.app/payment-success/",
+                cancel_url="https://nowa-barbershop.web.app/payment-cancel/",
                 metadata={"appointment_id": appointment.id}
             )
 
