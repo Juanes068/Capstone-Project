@@ -140,8 +140,8 @@ class CheckoutView(APIView):
                     "quantity": 1,
                 }],
                 mode="payment",
-                success_url="http://localhost:5173/payment-success/",
-                cancel_url="http://localhost:8000/api/cancel/",
+                success_url="https://nowa-frontend.onrender.com/payment-success/",
+                cancel_url="https://nowa-frontend.onrender.com/payment-cancel/",
                 metadata={"appointment_id": appointment.id}
             )
 
