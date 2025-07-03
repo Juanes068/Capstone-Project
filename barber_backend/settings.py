@@ -152,3 +152,7 @@ import os
 STRIPE_SECRET_KEY = os.getenv("STRIPE_SECRET_KEY")
 from dotenv import load_dotenv
 load_dotenv()
+
+import os
+
+STRIPE_WEBHOOK_SECRET = os.environ.get('STRIPE_WEBHOOK_SECRET')
