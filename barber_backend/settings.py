@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-ox=3fck7z4t#w=n_96ci$(igxvnq63^_*ulhw-4gatao7+*h&u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['nowa-barbershop.onrender.com']
 
 
 # Application definition
