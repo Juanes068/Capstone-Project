@@ -426,7 +426,7 @@ class ReviewDeleteView(APIView):
         review.delete()
         return Response({"message": "Review deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
 
-        
+
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAdminUser
@@ -457,3 +457,17 @@ class DashboardMostBookedServices(APIView):
             .order_by('-count')[:5]
         )
         return Response(data)
+
+
+from django.contrib.auth.models import User
+from django.http import JsonResponse
+
+def create_superuser(request):
+    if User.objects.filter(username='admin').exists():
+        return JsonResponse({"message": "Superuser already exists"})
+    User.objects.create_superuser(
+        username='Juanes068',
+        email='trianajuan95@gmail.com',
+        password='NOWA2025'
+    )
+    return JsonResponse({"message": "Superuser created successfully"})
