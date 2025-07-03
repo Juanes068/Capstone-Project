@@ -36,13 +36,9 @@ function Home() {
                     Welcome to NOWA Barbershop, your specialized grooming destination. We offer a wide variety of
                     professional barbers dedicated to providing you with exceptional haircuts, beard trims, and personalized services to help you look your best.
                 </p>
-               
-                <Button
-                    variant="dark" type="submit" className="w-20"
-                    onClick={handleBookNow}
-                >
-                    Book Now
-                </Button>
+                <div style={{ height: '20px' }} />
+
+                
             </Container>
 
             {/* Services Carousel */}

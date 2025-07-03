@@ -9,7 +9,10 @@ function BookAppointment() {
   const navigate = useNavigate();
   const [services, setServices] = useState([]);
   const [barbers, setBarbers] = useState([]);
-  const [selectedServices, setSelectedServices] = useState([]);
+  const [selectedServices, setSelectedServices] = useState(() => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    return cart.map(service => service.id);
+  });
   const [selectedBarber, setSelectedBarber] = useState(null);
   const [date, setDate] = useState(new Date());
   const [time, setTime] = useState('');
@@ -44,6 +47,16 @@ function BookAppointment() {
     e.preventDefault();
     setMessage('');
 
+    if (selectedServices.length === 0) {
+      setMessage('Please select at least one service from the Services page.');
+      return;
+    }
+
+    if (!selectedBarber) {
+      setMessage('Please select a barber.');
+      return;
+    }
+
     try {
       await axios.post(
         `${import.meta.env.VITE_REACT_APP_API_URL}/appointments/`,
@@ -55,6 +68,8 @@ function BookAppointment() {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+
+      localStorage.removeItem('cart'); // Limpia carrito tras reserva
       navigate('/confirmation');
     } catch (err) {
       setMessage('Error booking appointment. Please try again.');
@@ -67,29 +82,23 @@ function BookAppointment() {
       {message && <Alert variant="info">{message}</Alert>}
 
       <Form onSubmit={handleSubmit}>
-        {/* Services Selection as Checkboxes */}
+        {/* Mostrar servicios seleccionados */}
         <Form.Group className="mb-3">
-          <Form.Label>Select Services</Form.Label>
-          {services.map((service) => (
-            <Form.Check
-              key={service.id}
-              type="checkbox"
-              id={`service-${service.id}`}
-              label={`${service.name} - $${service.price}`}
-              value={service.id}
-              onChange={(e) => {
-                const id = parseInt(e.target.value);
-                if (e.target.checked) {
-                  setSelectedServices((prev) => [...prev, id]);
-                } else {
-                  setSelectedServices((prev) => prev.filter((sid) => sid !== id));
-                }
-              }}
-            />
-          ))}
+          <Form.Label>Selected Services</Form.Label>
+          {selectedServices.length === 0 ? (
+            <Alert variant="warning">No services selected. Please add services from the Services page.</Alert>
+          ) : (
+            <ul>
+              {services
+                .filter(service => selectedServices.includes(service.id))
+                .map(service => (
+                  <li key={service.id}>{service.name} - ${service.price}</li>
+                ))}
+            </ul>
+          )}
         </Form.Group>
 
-        {/* Barbers Selection as Cards with Images */}
+        {/* Selección de barbero */}
         <Form.Group className="mb-3">
           <Form.Label>Select a Barber</Form.Label>
           <Row>

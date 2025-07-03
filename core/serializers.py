@@ -24,10 +24,27 @@ class BarberSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'specialty', 'available']
 
 
+from rest_framework import serializers
+from .models import Appointment, Barber, Service
+
 class ServiceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Service
-        fields = '__all__'
+        fields = ['id', 'name', 'price']
+
+class BarberSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Barber
+        fields = ['id', 'name', 'specialty']
+
+class AppointmentSerializer(serializers.ModelSerializer):
+    services = ServiceSerializer(many=True, read_only=True)
+    barber = BarberSerializer(read_only=True)
+
+    class Meta:
+        model = Appointment
+        fields = ['id', 'services', 'date', 'time', 'barber']
+
 
 from .models import Review
 

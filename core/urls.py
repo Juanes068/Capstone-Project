@@ -18,6 +18,7 @@ from .views import stripe_webhook
 from .views import ListServicesView
 from .views import ReviewDeleteView
 from . import admin_views
+from .views import UserAppointmentsView
 
 
 
@@ -49,6 +50,8 @@ urlpatterns = [
     path('services/view/', ListServicesView.as_view(), name='list-services'),
     path('reviews/delete/<int:pk>/', ReviewDeleteView.as_view(), name='review-delete'),
     path('dashboard/', admin_views.admin_dashboard, name='admin-dashboard'),
+    path('my-appointments/', UserAppointmentsView.as_view(), name='user-appointments'),
+
 ]
 #Creacion de endpoint - ping - test
 
