@@ -458,12 +458,11 @@ class DashboardMostBookedServices(APIView):
         )
         return Response(data)
 
-
 from django.contrib.auth.models import User
 from django.http import JsonResponse
 
 def create_superuser(request):
-    if User.objects.filter(username='admin').exists():
+    if User.objects.filter(username='Juanes068').exists():
         return JsonResponse({"message": "Superuser already exists"})
     User.objects.create_superuser(
         username='Juanes068',
