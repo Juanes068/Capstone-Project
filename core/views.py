@@ -66,27 +66,26 @@ def user_profile(request):
 
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
-from .serializers import AppointmentSerializer
-from .models import Appointment
+from rest_framework.response import Response
 from rest_framework import status
 from django.http import JsonResponse
+from .serializers import AppointmentSerializer
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_appointment(request):
     data = request.data.copy()
     data['user'] = request.user.id
+
     serializer = AppointmentSerializer(data=data)
     if serializer.is_valid():
-        serializer.save(user=request.user)
-        return JsonResponse(serializer.data, status=201)
+        appointment = serializer.save()
+        appointment.services.set(data.get('services'))  # aseguramos ManyToMany se asigna correctamente
+        return JsonResponse(serializer.data, status=201, safe=False)
     else:
-print("DATA:", data)
-print("USER:", request.user)
-print("IS AUTHENTICATED:", request.user.is_authenticated)
-print("VALID:", serializer.is_valid())
-print("ERRORS:", serializer.errors)
+        print("ERRORS:", serializer.errors)
         return JsonResponse(serializer.errors, status=400)
+
 
 
 from rest_framework.views import APIView
