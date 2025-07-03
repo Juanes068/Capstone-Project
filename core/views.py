@@ -64,12 +64,12 @@ def user_profile(request):
             "email": user.email
         }, status=status.HTTP_200_OK)
 
-
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from .serializers import AppointmentSerializer
 from .models import Appointment
 from rest_framework import status
+from django.http import JsonResponse
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
@@ -80,7 +80,14 @@ def create_appointment(request):
     if serializer.is_valid():
         serializer.save(user=request.user)
         return JsonResponse(serializer.data, status=201)
-    return JsonResponse(serializer.errors, status=400)
+    else:
+print("DATA:", data)
+print("USER:", request.user)
+print("IS AUTHENTICATED:", request.user.is_authenticated)
+print("VALID:", serializer.is_valid())
+print("ERRORS:", serializer.errors)
+        return JsonResponse(serializer.errors, status=400)
+
 
 from rest_framework.views import APIView
 from rest_framework.response import Response
