@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Carousel, Card, Row, Col, Spinner, Alert } from 'react-bootstrap';
+import { Container, Carousel, Card, Row, Col, Spinner, Alert, Button } from 'react-bootstrap';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
     const [reviews, setReviews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchReviews = async () => {
@@ -21,6 +23,10 @@ function Home() {
         fetchReviews();
     }, []);
 
+    const handleBookNow = () => {
+        navigate('/book');
+    };
+
     return (
         <Container fluid className="p-0">
             {/* Title and Description */}
@@ -30,6 +36,13 @@ function Home() {
                     Welcome to NOWA Barbershop, your specialized grooming destination. We offer a wide variety of
                     professional barbers dedicated to providing you with exceptional haircuts, beard trims, and personalized services to help you look your best.
                 </p>
+               
+                <Button
+                    variant="dark" type="submit" className="w-20"
+                    onClick={handleBookNow}
+                >
+                    Book Now
+                </Button>
             </Container>
 
             {/* Services Carousel */}

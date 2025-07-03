@@ -411,3 +411,49 @@ class ListServicesView(ListAPIView):
     serializer_class = ServiceSerializer
     permission_classes = [AllowAny]  
 
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAdminUser
+from rest_framework.response import Response
+from rest_framework import status
+from django.shortcuts import get_object_or_404
+from .models import Review
+
+class ReviewDeleteView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def delete(self, request, pk):
+        review = get_object_or_404(Review, pk=pk)
+        review.delete()
+        return Response({"message": "Review deleted successfully."}, status=status.HTTP_204_NO_CONTENT)
+
+        
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAdminUser
+from .models import Appointment, Service
+from django.db.models import Count
+from django.utils import timezone
+
+class DashboardDailyActivity(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        today = timezone.now().date()
+        data = (
+            Appointment.objects.filter(date__lte=today)
+            .values('date')
+            .annotate(count=Count('id'))
+            .order_by('date')
+        )
+        return Response(data)
+
+class DashboardMostBookedServices(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        data = (
+            Appointment.objects.values('service__name')
+            .annotate(count=Count('id'))
+            .order_by('-count')[:5]
+        )
+        return Response(data)

@@ -388,9 +388,14 @@ json
 
 ### Stripe integration for checkout
 - Configured Stripe Checkout to:
-  - Redirect to the frontend confirmation page after payment.
-  - Automatically register payments in the "Payment" model upon webhook confirmation.
-  - Update appointment payment status seamlessly in NOWA BARBER-SHOP.
+- Redirect to the frontend confirmation page after payment.
+- Automatically register payments in the "Payment" model upon webhook confirmation.
+- Update appointment payment status seamlessly in NOWA BARBER-SHOP.
+
+### DELETE /api/reviews/delete/<id>/
+- Allows admin users to delete specific reviews from the system.
+- Secured with IsAdminUser to prevent unauthorized deletions.
+- Permanently removes a review identified by its id for moderation or cleanup purposes.
 
 ### Week 3, 4 & 5: Development – Front- end 
 

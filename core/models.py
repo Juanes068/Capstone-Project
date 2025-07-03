@@ -57,3 +57,15 @@ class Review(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.service.name} - {self.rating}"
+
+
+from django.contrib import admin
+from .models import Review
+
+@admin.register(Review)
+class ReviewAdmin(admin.ModelAdmin):
+    list_display = ('id', 'user', 'service', 'rating', 'comment', 'created_at')
+    search_fields = ('user__username', 'service__name', 'comment')
+    list_filter = ('rating', 'created_at')
+
+

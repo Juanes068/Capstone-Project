@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('core.urls')), 
+    path('', include('core.urls')),
 ]
  # aca definimos que todo lo iniciado con "/api" se manega atravez de core
  # admid lo maneja django mientras /api/ping se maneja en core

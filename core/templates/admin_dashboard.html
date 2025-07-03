@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+{% block content %}
+<h1>NOWA Barber-Shop Dashboard</h1>
+
+<h2>📆 Daily Activity</h2>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Date</th>
+        <th>Appointments</th>
+    </tr>
+    {% for item in daily_activity %}
+    <tr>
+        <td>{{ item.date }}</td>
+        <td>{{ item.count }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No data available.</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>🏆 Most Booked Services</h2>
+<table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+        <th>Service</th>
+        <th>Bookings</th>
+    </tr>
+    {% for item in most_booked %}
+    <tr>
+        <td>{{ item.service__name }}</td>
+        <td>{{ item.count }}</td>
+    </tr>
+    {% empty %}
+    <tr>
+        <td colspan="2">No data available.</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
