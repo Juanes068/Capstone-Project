@@ -40,7 +40,7 @@
 
 - Database:
     1. **MySQL**
-    2. **ORM:** Django's built-in ORM
+    2. **ORM:** Django"s built-in ORM
 
 - Extras:
     1. **Email Notifications:** Using "django.core.mail" for appointment confirmations (optional)
@@ -230,13 +230,13 @@ json
 
 ### Routes connection and test endpoint
 - A new "core/urls.py" file was created to define the app’s internal routes.
-- It was linked to the main router in "barber_backend/urls.py" using "path('api/', include('core.urls'))".
+- It was linked to the main router in "barber_backend/urls.py" using "path("api/", include("core.urls"))".
 - A test route "/api/ping/" was implemented and returned a simple JSON: "{"message": "pong"}".
 
 ### User registration ("/api/register/")
 - A public endpoint "POST /api/register/" was created to allow new user registration.
 - The view used "User.objects.create_user()" to create users with a username, email, and password.
-- CSRF checks were disabled using "@csrf_exempt" since it's consumed via Postman or external clients.
+- CSRF checks were disabled using "@csrf_exempt" since it"s consumed via Postman or external clients.
 ![API REGISTER](assets/APIendpointPOSTMANregisterpost.png)
 ### JWT authentication ("/api/login/")
 - The developer installed "djangorestframework" and "djangorestframework-simplejwt".
@@ -277,7 +277,7 @@ json
 ![API GET PAYMENT](assets/GETpayment.png)
 
 ### PATCH /api/profile/
-- Protected route to update user's own profile (username and email).
+- Protected route to update user"s own profile (username and email).
 - Uses PATCH method with JWT authentication required.
 - Implemented using request.user to ensure ownership.
 - Tested in Postman with valid token and partial data.
@@ -386,16 +386,17 @@ json
 - Allows users to view their payment history.
 - Integrated with Stripe webhook to automatically register payments.
 
-### Stripe integration for checkout
-- Configured Stripe Checkout to:
-- Redirect to the frontend confirmation page after payment.
-- Automatically register payments in the "Payment" model upon webhook confirmation.
-- Update appointment payment status seamlessly in NOWA BARBER-SHOP.
-
 ### DELETE /api/reviews/delete/<id>/
 - Allows admin users to delete specific reviews from the system.
 - Secured with IsAdminUser to prevent unauthorized deletions.
 - Permanently removes a review identified by its id for moderation or cleanup purposes.
+
+### Last update back-end 
+- Configured the serializer for `Appointment` to return barber and service details using nested serializers.
+- Verified and ensured endpoints deliver the correct structure for frontend consumption.
+- Adjusted Stripe Checkout integration to dynamically calculate payment amounts based on booked services.
+- Tested and validated webhook functionality to confirm payment registrations.
+- Cleaned and ensured admin dashboard endpoints (`daily-activity`, `most-booked-services`) are functional and ready.
 
 ### Week 3, 4 & 5: Development – Front- end 
 
@@ -482,5 +483,19 @@ json
   - Appointment ID, date, time, status, and booked services.
 
 ### Payments Page ("PaymentsPage.jsx")
-- Displays authenticated user's payment history:
-  - Payment ID, amount, date, and linked appointment ID.
+- Displays authenticated user"s payment history:
+- Payment ID, amount, date, and linked appointment ID.
+
+### Last update front-end 
+
+- Integrated **Add to Cart** functionality in the Services page, storing selected services in localStorage.
+- Added a **Go to Book** button on the Services page for a seamless transition.
+- Updated the **Book Appointment** page to:
+  - Load services directly from the cart without reselecting.
+  - Allow barber, date, and time selection.
+  - Submit the appointment and clear the cart upon confirmation.
+
+- Completed the **Confirmation Page**:
+  - Loads the most recent appointment for the user.
+  - Displays appointment details: date, time, barber name and specialty, and list of services with prices.
+  - Calculates and displays the **total amount to pay** for the services booked.
