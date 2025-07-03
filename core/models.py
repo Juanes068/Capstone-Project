@@ -1,5 +1,6 @@
 
 # Create your models here.
+from payments.models import Payment
 
 from django.db import models
 from django.contrib.auth.models import User
