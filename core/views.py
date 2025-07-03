@@ -81,11 +81,11 @@ def create_appointment(request):
         serializer.save(user=request.user)
         return JsonResponse(serializer.data, status=201)
     else:
-print("DATA:", data)
-print("USER:", request.user)
-print("IS AUTHENTICATED:", request.user.is_authenticated)
-print("VALID:", serializer.is_valid())
-print("ERRORS:", serializer.errors)
+        print("DATA:", data)
+        print("USER:", request.user)
+        print("IS AUTHENTICATED:", request.user.is_authenticated)
+        print("VALID:", serializer.is_valid())
+        print("ERRORS:", serializer.errors)
         return JsonResponse(serializer.errors, status=400)
 
 
