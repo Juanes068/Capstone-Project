@@ -89,7 +89,7 @@ ASGI_APPLICATION = 'barber_backend.asgi.application'
 
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('mysql://root:vjxHEFjTrILMMWARRJqjKFphksAIRfMt@trolley.proxy.rlwy.net:40873/railway'))
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
 }
 
 
