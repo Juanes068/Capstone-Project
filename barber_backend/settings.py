@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 import os
+import dj_database_url
 
 from pathlib import Path
 
@@ -33,33 +34,34 @@ ALLOWED_HOSTS = ['nowa-barbershop.onrender.com']
 # Application definition
 
 INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.admin',  # panel de administración
+    'django.contrib.auth',   # sistema de usuarios
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
-    'core',
-    'corsheaders',
+    'rest_framework',        # DRF para API
+    'corsheaders',           # manejar CORS
+    'core',                  # tu app principal NOWA BARBER-SHOP
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # sirve archivos estáticos en producción
+    'corsheaders.middleware.CorsMiddleware',       # habilita CORS
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
+
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "https://nowa-barbershop.web.app",
+    "https://nowa-barbershop.web.app", #Permite al frontend en Firebase y localhost hacer peticiones al backend.
 ]
 ROOT_URLCONF = 'barber_backend.urls'
 
@@ -85,11 +87,9 @@ ASGI_APPLICATION = 'barber_backend.asgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=os.environ.get('mysql://root:vjxHEFjTrILMMWARRJqjKFphksAIRfMt@mysql.railway.internal:3306/railway'))
 }
 
 

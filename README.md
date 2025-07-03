@@ -499,3 +499,71 @@ json
   - Loads the most recent appointment for the user.
   - Displays appointment details: date, time, barber name and specialty, and list of services with prices.
   - Calculates and displays the **total amount to pay** for the services booked.
+
+# REFERENCE
+
+This Capstone Project was built using public knowledge and best practices from various open-source tutorials, official documentation and community examples. Below is a list of relevant references and learning resources used as inspiration and guidance:
+
+
+## Backend (Django, Django REST Framework)
+
+- Django REST Framework Official Tutorial  
+  [https://www.django-rest-framework.org/tutorial/quickstart/](https://www.django-rest-framework.org/tutorial/quickstart/)
+
+- Django Documentation – Writing your first Django app  
+  [https://docs.djangoproject.com/en/5.0/intro/tutorial01/](https://docs.djangoproject.com/en/5.0/intro/tutorial01/)
+
+- Simple JWT – JSON Web Token Authentication with DRF  
+  [https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/getting_started.html)
+
+- Full example: CRUD API with Django and DRF  
+  [https://github.com/encode/django-rest-framework](https://github.com/encode/django-rest-framework)
+
+
+
+## Payments (Stripe)
+
+- Stripe Official Docs – Accept a payment with Django  
+  [https://stripe.com/docs/payments/accept-a-payment](https://stripe.com/docs/payments/accept-a-payment)
+
+- Example Project: Stripe Checkout in Django  
+  [https://github.com/stripe-samples/accept-a-payment](https://github.com/stripe-samples/accept-a-payment)
+
+
+## Frontend (React + Vite + Bootstrap)
+
+- Vite Documentation – Getting Started  
+  [https://vitejs.dev/guide/](https://vitejs.dev/guide/)
+
+- React Documentation – Main Concepts  
+  [https://react.dev/learn](https://react.dev/learn)
+
+- React Bootstrap Components  
+  [https://react-bootstrap.github.io/getting-started/introduction](https://react-bootstrap.github.io/getting-started/introduction)
+
+- Example: JWT Authentication in React  
+  [https://www.digitalocean.com/community/tutorials/react-react-router-jwt-auth](https://www.digitalocean.com/community/tutorials/react-react-router-jwt-auth)
+
+
+
+## Deployment and CI/CD
+
+- Render.com Official Django Deploy Guide  
+  [https://render.com/docs/deploy-django](https://render.com/docs/deploy-django)
+
+- Firebase Hosting Docs  
+  [https://firebase.google.com/docs/hosting](https://firebase.google.com/docs/hosting)
+
+
+
+## Additional Community Examples
+
+- Barber Booking Platform (example repo)  
+  [https://github.com/berkayk/appointment-booking](https://github.com/berkayk/appointment-booking)
+
+- Tutorials – Build a Booking App in Django  
+  [https://www.youtube.com/watch?v=k8XGzBqk0pE](https://www.youtube.com/watch?v=k8XGzBqk0pE)
+
+
+
+**These references were used to guide the design, structure and best practices of the NOWA BARBER-SHOP Capstone Project.**
