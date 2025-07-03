@@ -19,7 +19,6 @@ from .views import ListServicesView
 from .views import ReviewDeleteView
 from . import admin_views
 from .views import UserAppointmentsView
-from .views import create_superuser
 
 
 
@@ -52,7 +51,6 @@ urlpatterns = [
     path('reviews/delete/<int:pk>/', ReviewDeleteView.as_view(), name='review-delete'),
     path('dashboard/', admin_views.admin_dashboard, name='admin-dashboard'),
     path('my-appointments/', UserAppointmentsView.as_view(), name='user-appointments'),
-    path('create-superuser/', create_superuser),  # TEMPORAL
 
 ]
 #Creacion de endpoint - ping - test
