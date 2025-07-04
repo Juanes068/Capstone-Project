@@ -567,3 +567,5 @@ This Capstone Project was built using public knowledge and best practices from v
 
 
 **These references were used to guide the design, structure and best practices of the NOWA BARBER-SHOP Capstone Project.**
+
+***I have to update my readme with other reference  
